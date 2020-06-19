@@ -26,7 +26,7 @@ const model = new DiagramModel();
 
 //####################################################
 // now create two nodes of each type, and connect them
-const producerNode1 = new ProducerNodeModel({name: 'Producer1'});
+const producerNode1 = new ProducerNodeModel({name: 'Producer1', interval: 2300});
 producerNode1.setPosition(400, 250);
 const producerNode2 = new ProducerNodeModel({name: 'Producer2'});
 producerNode2.setPosition(400, 400);

@@ -6,11 +6,13 @@ import { RXJSPortModel } from '../event-link/RXJSLinkModel';
 export interface ProducerNodeModelOptions extends BaseModelOptions {
 	color?: string;
 	name?: string;
+	interval?: number;
 }
 
 export class ProducerNodeModel extends DefaultNodeModel {
 	color: string;
 	name: string;
+	interval: number;
 	subject: Subject<any>;
 
 	constructor(options: ProducerNodeModelOptions = {}) {
@@ -20,9 +22,10 @@ export class ProducerNodeModel extends DefaultNodeModel {
 		});
 		this.color = options.color || 'red';
 		this.name = options.name
+		this.interval = options.interval || 1000
 		this.subject = new Subject<any>();
 		this.subject.subscribe(x => console.log(`${this.name} sending:  "${x}"`))
-		interval(1000).subscribe(x => this.subject.next(`From ${this.name}: ${x}`))
+		interval(this.interval).subscribe(x => this.subject.next(`From ${this.name}: ${x}`))
 		this.registerListener({
 			eventWillFire: e => {
 				if (e.function === 'entityRemoved') {
