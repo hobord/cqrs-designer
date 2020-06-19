@@ -21,7 +21,7 @@ export class ProducerNodeModel extends DefaultNodeModel {
 		this.color = options.color || 'red';
 		this.name = options.name
 		this.subject = new Subject<any>();
-		this.subject.subscribe(x => console.log(`${this.name} send:  ${x}`))
+		this.subject.subscribe(x => console.log(`${this.name} sending:  "${x}"`))
 		interval(1000).subscribe(x => this.subject.next(`From ${this.name}: ${x}`))
 		this.registerListener({
 			eventWillFire: e => {
