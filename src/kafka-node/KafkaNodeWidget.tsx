@@ -25,7 +25,7 @@ export class KafkaNodeWidget extends React.Component<KafkaNodeWidgetProps, Kafka
 					<div className="circle-port" />
 				</PortWidget>
 				<div className="custom-node-color" style={{ backgroundColor: this.props.node.color }} />
-				<div>Kafka</div>
+				<div style={{color: 'white'}}>{ this.props.node.name }</div>
 			</div>
 		);
 	}

@@ -26,9 +26,9 @@ const model = new DiagramModel();
 
 //####################################################
 // now create two nodes of each type, and connect them
-const producerNode1 = new ProducerNodeModel({name: 'producer 1'});
+const producerNode1 = new ProducerNodeModel({name: 'Producer1'});
 producerNode1.setPosition(400, 250);
-const producerNode2 = new ProducerNodeModel({name: 'producer 2'});
+const producerNode2 = new ProducerNodeModel({name: 'Producer2'});
 producerNode2.setPosition(400, 400);
 
 const kafkaNode1 = new KafkaNodeModel({name: 'Kafka1'});
