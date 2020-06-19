@@ -31,10 +31,10 @@ producerNode1.setPosition(400, 250);
 const producerNode2 = new ProducerNodeModel({name: 'Producer2'});
 producerNode2.setPosition(400, 400);
 
-const kafkaNode1 = new KafkaNodeModel({name: 'Kafka1'});
+const kafkaNode1 = new KafkaNodeModel({name: 'KafkaParition1'});
 kafkaNode1.setPosition(600, 300);
 
-const kafkaNode2 = new KafkaNodeModel({name: 'Kafka2'});
+const kafkaNode2 = new KafkaNodeModel({name: 'KafkaParition2'});
 kafkaNode2.setPosition(600, 500);
 
 const consumerNode1 = new ConsumerNodeModel({name: '1'});
