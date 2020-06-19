@@ -11,8 +11,7 @@ export interface KafkaNodeModelOptions extends BaseModelOptions {
 export class KafkaNodeModel extends NodeModel {
 	color: string;
 	name: string
-	subject: Subject<number>;
-	store: Array<any>;
+	subject: Subject<number>; //TODO: BehaviorSubject, ReplaySubject
 
 	constructor(options: KafkaNodeModelOptions = {}) {
 		super({
@@ -20,12 +19,10 @@ export class KafkaNodeModel extends NodeModel {
 			type: 'kafka-node'
 		});
 		this.name = options.name
-		this.store = [];
 		this.color = options.color || 'red';
 		this.subject = new Subject<number>();
 		// this.subject.subscribe(x => console.log("Kafka:", x))	
 		this.subject.subscribe(x => console.log(`${this.name}: ${x}`))
-		this.subject.subscribe(x => this.store.push(x))
 		this.registerListener({
 			eventWillFire: e => {
 				if (e.function === 'entityRemoved') {
