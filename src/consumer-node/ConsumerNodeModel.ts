@@ -3,26 +3,24 @@ import { BaseModelOptions } from '@projectstorm/react-canvas-core';
 import { interval, Subject } from 'rxjs';
 import { RXJSPortModel } from '../event-link/RXJSLinkModel';
 
-export interface ProducerNodeModelOptions extends BaseModelOptions {
+export interface ConsumerNodeModelOptions extends BaseModelOptions {
 	color?: string;
 	name?: string;
 }
 
-export class ProducerNodeModel extends DefaultNodeModel {
+export class ConsumerNodeModel extends DefaultNodeModel {
 	color: string;
 	name: string;
-	subject: Subject<any>;
+	subject: Subject<number>;
 
-	constructor(options: ProducerNodeModelOptions = {}) {
+	constructor(options: ConsumerNodeModelOptions = {}) {
 		super({
 			...options,
-			type: 'producer-node'
+			type: 'consumer-node'
 		});
-		this.color = options.color || 'red';
 		this.name = options.name
 		this.subject = new Subject<any>();
-		this.subject.subscribe(x => console.log(`${this.name} send:  ${x}`))
-		interval(1000).subscribe(x => this.subject.next(`From ${this.name}: ${x}`))
+		this.subject.subscribe(x => console.log(`Consumer ${this.name}: ${x}`))
 		this.registerListener({
 			eventWillFire: e => {
 				if (e.function === 'entityRemoved') {
@@ -30,15 +28,18 @@ export class ProducerNodeModel extends DefaultNodeModel {
 				}
 			}
 		})
+
+		
+		this.color = options.color || 'blue';
 		// setup an in and out port
 		this.addPort(
 			new RXJSPortModel({
-				in: false,
-				name: 'out',
-				// alignment: PortModelAlignment.RIGHT
+				in: true,
+				name: 'in',
 			})
 		);
 	}
+
 
 	GetSubject(): Subject<any> {
 		return this.subject

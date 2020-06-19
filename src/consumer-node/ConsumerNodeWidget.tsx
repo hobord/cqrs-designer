@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { DiagramEngine, PortWidget } from '@projectstorm/react-diagrams-core';
-import { KafkaNodeModel } from './KafkaNodeModel';
+import { ConsumerNodeModel } from './ConsumerNodeModel';
 
-export interface KafkaNodeWidgetProps {
-	node: KafkaNodeModel;
+export interface ConsumerNodeWidgetProps {
+	node: ConsumerNodeModel;
 	engine: DiagramEngine;
 }
 
-export interface KafkaNodeWidgetState {}
+export interface ConsumerNodeWidgetState {}
 
-export class KafkaNodeWidget extends React.Component<KafkaNodeWidgetProps, KafkaNodeWidgetState> {
-	constructor(props: KafkaNodeWidgetProps) {
+export class ConsumerNodeWidget extends React.Component<ConsumerNodeWidgetProps, ConsumerNodeWidgetState> {
+	constructor(props: ConsumerNodeWidgetProps) {
 		super(props);
 		this.state = {};
 	}
@@ -21,11 +21,8 @@ export class KafkaNodeWidget extends React.Component<KafkaNodeWidgetProps, Kafka
 				<PortWidget engine={this.props.engine} port={this.props.node.getPort('in')}>
 					<div className="circle-port" />
 				</PortWidget>
-				<PortWidget engine={this.props.engine} port={this.props.node.getPort('out')}>
-					<div className="circle-port" />
-				</PortWidget>
 				<div className="custom-node-color" style={{ backgroundColor: this.props.node.color }} />
-				<div>Kafka</div>
+				<div>Consumer</div>
 			</div>
 		);
 	}

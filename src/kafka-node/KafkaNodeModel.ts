@@ -1,31 +1,52 @@
-import { NodeModel, DefaultPortModel } from '@projectstorm/react-diagrams';
+import { NodeModel, DefaultPortModel, PortModelAlignment } from '@projectstorm/react-diagrams';
 import { BaseModelOptions } from '@projectstorm/react-canvas-core';
+import { RXJSPortModel } from '../event-link/RXJSLinkModel';
+import { Subject } from 'rxjs';
 
 export interface KafkaNodeModelOptions extends BaseModelOptions {
 	color?: string;
+	name?: string;
 }
 
 export class KafkaNodeModel extends NodeModel {
 	color: string;
+	name: string
+	subject: Subject<number>;
+	store: Array<any>;
 
 	constructor(options: KafkaNodeModelOptions = {}) {
 		super({
 			...options,
 			type: 'kafka-node'
 		});
+		this.name = options.name
+		this.store = [];
 		this.color = options.color || 'red';
+		this.subject = new Subject<number>();
+		// this.subject.subscribe(x => console.log("Kafka:", x))	
+		this.subject.subscribe(x => console.log(`${this.name}: ${x}`))
+		this.subject.subscribe(x => this.store.push(x))
+		this.registerListener({
+			eventWillFire: e => {
+				if (e.function === 'entityRemoved') {
+					this.subject.complete()
+				}
+			}
+		})
 
-		// setup an in and out port
+
 		this.addPort(
-			new DefaultPortModel({
+			new RXJSPortModel({
 				in: true,
-				name: 'in'
+				name: 'in',
+				alignment: PortModelAlignment.LEFT
 			})
 		);
 		this.addPort(
-			new DefaultPortModel({
+			new RXJSPortModel({
 				in: false,
-				name: 'out'
+				name: 'out',
+				alignment: PortModelAlignment.RIGHT				
 			})
 		);
 	}
@@ -40,5 +61,10 @@ export class KafkaNodeModel extends NodeModel {
 	deserialize(event): void {
 		super.deserialize(event);
 		this.color = event.data.color;
+	}
+
+
+	GetSubject(): Subject<any> {
+		return this.subject
 	}
 }
