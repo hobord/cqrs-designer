@@ -50,7 +50,7 @@ consumerNode2.setPosition(800, 400);
 
 
 model.addAll(kafkaNode1, kafkaNode2, producerNode1, consumerNode1, producerNode2, consumerNode2); //link1
-
+model.setGridSize(10);
 // model.registerListener({
 // 	eventDidFire: (e) => {
 // 		console.log(e)
@@ -63,5 +63,5 @@ model.addAll(kafkaNode1, kafkaNode2, producerNode1, consumerNode1, producerNode2
 engine.setModel(model);
 
 document.addEventListener('DOMContentLoaded', () => {
-	ReactDOM.render(<BodyWidget engine={engine} />, document.querySelector('#application'));
+	ReactDOM.render(<BodyWidget model={model} engine={engine} />, document.querySelector('#application'));
 });

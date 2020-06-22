@@ -18,11 +18,15 @@ export class ProducerNodeWidget extends React.Component<ProducerNodeWidgetProps,
 	render() {
 		return (
 			<div className="custom-node">
-				<PortWidget engine={this.props.engine} port={this.props.node.getPort('out')}>
-					<div className="circle-port" />
-				</PortWidget>
-				<div className="custom-node-color" style={{ backgroundColor: this.props.node.color }} />
-				<div style={{color: 'white'}}>{ this.props.node.name }</div>
+                <div className="custom-node-title" style={{color: 'white'}}>{this.props.node.name}</div>
+
+                <div className="custom-node-content">
+                    <div></div>
+                    {/*<div className="custom-node-color" style={{backgroundColor: this.props.node.color}}/>*/}
+                    <PortWidget engine={this.props.engine} port={this.props.node.getPort('out')}>
+                        <div className="circle-port"/>
+                    </PortWidget>
+                </div>
 			</div>
 		);
 	}

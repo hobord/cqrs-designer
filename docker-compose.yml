@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  cqrs-designer:
+    image: node:14
+    container_name: cqrs-designer
+    tty: true
+    volumes:
+      - ./:/app
+    ports:
+      - 9000:9000

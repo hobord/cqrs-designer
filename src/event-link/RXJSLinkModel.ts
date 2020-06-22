@@ -6,8 +6,9 @@ export class RXJSLinkModel extends DefaultLinkModel {
   subject: Subject<any>;
 	constructor() {
     super({
-      type: 'rxjs',
-      width: 5,
+        type: 'rxjs',
+        width: 2,
+        color: '#FFF',
 		});
     this.subject = new Subject<any>();
 
