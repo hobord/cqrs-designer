@@ -18,11 +18,14 @@ export class ConsumerNodeWidget extends React.Component<ConsumerNodeWidgetProps,
 	render() {
 		return (
 			<div className="custom-node">
-				<PortWidget engine={this.props.engine} port={this.props.node.getPort('in')}>
-					<div className="circle-port" />
-				</PortWidget>
-				<div className="custom-node-color" style={{ backgroundColor: this.props.node.color }} />
-				<div style={{color: 'white'}}>{ this.props.node.name }</div>
+                <div className="custom-node-title" style={{color: 'white'}}>{this.props.node.name}</div>
+				<div className="custom-node-content">
+                    <PortWidget engine={this.props.engine} port={this.props.node.getPort('in')}>
+                        <div className="circle-port"/>
+                    </PortWidget>
+                    {/*<div className="custom-node-color" style={{ backgroundColor: this.props.node.color }} />*/}
+                    <div></div>
+                </div>
 			</div>
 		);
 	}
