@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { DiagramEngine, PortWidget } from '@projectstorm/react-diagrams-core';
 import { ProducerNodeModel } from './ProducerNodeModel';
+import classNames from "classnames";
 
 export interface ProducerNodeWidgetProps {
 	node: ProducerNodeModel;
@@ -17,8 +18,11 @@ export class ProducerNodeWidget extends React.Component<ProducerNodeWidgetProps,
 
 	render() {
 		return (
-			<div className="custom-node">
-                <div className="custom-node-title" style={{color: 'white'}}>{this.props.node.name}</div>
+			<div className={classNames({
+                'custom-node': true,
+                'is-selected': this.props.node.isSelected(),
+            })}>
+                <div className="custom-node-title">{this.props.node.name}</div>
 
                 <div className="custom-node-content">
                     <div></div>

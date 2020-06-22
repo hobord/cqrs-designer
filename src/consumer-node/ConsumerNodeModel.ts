@@ -20,7 +20,7 @@ export class ConsumerNodeModel extends DefaultNodeModel {
 		});
 		this.name = options.name
 		this.subject = new Subject<any>();
-		this.subject.subscribe(x => console.log(`Consumer ${this.name}: ${x}`))
+		// this.subject.subscribe(x => console.log(`Consumer ${this.name}: ${x}`))
 		this.registerListener({
 			eventWillFire: e => {
 				if (e.function === 'entityRemoved') {

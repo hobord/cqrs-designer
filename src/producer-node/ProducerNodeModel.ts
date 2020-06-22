@@ -20,11 +20,12 @@ export class ProducerNodeModel extends DefaultNodeModel {
 			...options,
 			type: 'producer-node'
 		});
+
 		this.color = options.color || 'red';
 		this.name = options.name
 		this.interval = options.interval || 1000
 		this.subject = new Subject<any>();
-		this.subject.subscribe(x => console.log(`${this.name} sending:  "${x}"`))
+		// this.subject.subscribe(x => console.log(`${this.name} sending:  "${x}"`))
 		interval(this.interval).subscribe(x => this.subject.next(`From ${this.name}: ${x}`))
 		this.registerListener({
 			eventWillFire: e => {
