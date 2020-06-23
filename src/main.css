@@ -24,10 +24,10 @@ html, body, #application{
 	border: solid 1px #FFF;
 	min-width: 150px;
     box-sizing: border-box;
-	height: 50px;
 	display: flex;
 	flex-direction: column;
 	position: relative;
+    color: #FFF;
 }
 .custom-node-title {
     display: flex;
@@ -35,21 +35,20 @@ html, body, #application{
     justify-content: center;
     padding: 3px;
     box-sizing: border-box;
-    color: #FFF;
     cursor: pointer;
 }
 .is-selected .custom-node-title,
 .custom-node-title:hover {
     background: rgba(255,255,255,0.9);
-    color: #06c !important;
+    color: #06c;
 }
 .custom-node-content {
     background: repeating-linear-gradient(-45deg, #00000000, #00000000 4px, #FFFFFF33 4px, #FFFFFF33 5px);
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     flex: 1 0 0;
-    padding: 5px;
+    padding: 10px 5px;
 }
 
 .custom-node-color{

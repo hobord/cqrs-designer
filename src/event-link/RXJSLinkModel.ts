@@ -1,9 +1,13 @@
 import { DefaultLinkModel, DefaultPortModel, DefaultPortModelOptions, DefaultLinkFactory } from '@projectstorm/react-diagrams';
 import { Subject } from 'rxjs/internal/Subject';
 import { ProducerNodeModel } from '../producer-node/ProducerNodeModel';
+import { Subscription } from 'rxjs';
 
 export class RXJSLinkModel extends DefaultLinkModel {
   subject: Subject<any>;
+  sourceSubscription: Subscription;
+  targetSubscription: Subscription;
+
 	constructor() {
     super({
         type: 'rxjs',
@@ -13,26 +17,19 @@ export class RXJSLinkModel extends DefaultLinkModel {
     this.subject = new Subject<any>();
 
     this.registerListener({
-      eventDidFire: e => {
-        switch (e.function) {
-          case "sourcePortChanged":
-            const sourceNode = this.sourcePort.getParent() as ProducerNodeModel
-            // console.log(sourceNode)
-            const sourceSubject = sourceNode.GetSubject()
-            // sourceSubject.next("hello")
-            sourceSubject.subscribe(e => this.subject.next(e))
-            break;
-          case "targetPortChanged":
-            const targetNode = this.targetPort.getParent() as ProducerNodeModel
-            // console.log(targetNode)
-            const targetSubject = targetNode.GetSubject()
-            // targetSubject.next("hello")
-            this.subject.subscribe(e => targetSubject.next(e))
-            break;
-          default:
-            break;
-        }
-        // console.log(e)
+      entityRemoved: e => {
+          this.sourceSubscription.unsubscribe();
+          this.targetSubscription.unsubscribe();
+      },
+      sourcePortChanged: e => {
+          const sourceNode = e.port.getParent() as ProducerNodeModel;
+          const sourceSubject = sourceNode.GetSubject();
+          this.sourceSubscription = sourceSubject.subscribe(e => this.subject.next(e));
+      },
+      targetPortChanged: e => {
+          const targetNode =e.port.getParent() as ProducerNodeModel
+          const targetSubject = targetNode.GetSubject()
+          this.targetSubscription = this.subject.subscribe(e => targetSubject.next(e))
       }
     })
   }

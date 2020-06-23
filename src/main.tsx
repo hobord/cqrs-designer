@@ -13,7 +13,8 @@ import { ConsumerNodeModel } from './consumer-node/ConsumerNodeModel';
 
 // create an instance of the engine
 const engine = createEngine();
-
+// Disable creating points on links ( easier to delete link )
+engine.maxNumberPointsPerLink = 0;
 // register the two engines
 engine.getNodeFactories().registerFactory(new KafkaNodeFactory());
 engine.getNodeFactories().registerFactory(new ProducerNodeFactory());
