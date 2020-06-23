@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/hobord/cqrs-designer)
+
 In this repo you will find a simple webpack-dev-server project
 that shows how to get started with the library.
 
