@@ -22,7 +22,7 @@ export class KafkaNodeModel extends NodeModel {
 		this.color = options.color || 'red';
 		this.subject = new Subject<number>();
 		// this.subject.subscribe(x => console.log("Kafka:", x))	
-		this.subject.subscribe(x => console.log(`${this.name}: ${x}`))
+		// this.subject.subscribe(x => console.log(`${this.name}: ${x}`))
 		this.registerListener({
 			eventWillFire: e => {
 				if (e.function === 'entityRemoved') {

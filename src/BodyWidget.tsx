@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { DiagramEngine, DiagramModel } from '@projectstorm/react-diagrams';
-import { CanvasWidget } from '@projectstorm/react-canvas-core';
-import styled, {StyledComponent} from '@emotion/styled';
+import { DiagramEngine, DiagramModel , LinkModel, NodeModel} from '@projectstorm/react-diagrams';
+import styled from '@emotion/styled';
+import { BaseModel, CanvasWidget, } from '@projectstorm/react-canvas-core';
 
 export interface BodyWidgetProps {
 	engine: DiagramEngine;
@@ -14,6 +14,45 @@ export interface BodyWidgetState {
     y: number;
     step: number;
 }
+
+const MenuItem = styled.div`
+    position: relative;
+    cursor: pointer;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    margin: 12.5px;
+    background: #06c;
+    color: #FFF;
+    transition: all 0.2s ease;
+    &:hover {
+        background: rgba(255,255,255,0.9);
+        color: #06c;
+    }
+    &:after {
+        content: " ";
+        position: absolute;
+        top: -3px;
+        left: 0;
+        bottom: -3px;
+        right: 0;
+        border-right: 1px solid #FFF;
+        border-left: 1px solid #FFF;
+    }
+    &:before {
+        content: " ";
+        position: absolute;
+        top: -0;
+        left: -3px;
+        bottom: 0;
+        right: -3px;
+        border-top: 1px solid #FFF;
+        border-bottom: 1px solid #FFF;
+    }
+	`;
 
 const Blueprint = styled.div<BodyWidgetState>`
     position: absolute;
@@ -51,9 +90,45 @@ export class BodyWidget extends React.Component<BodyWidgetProps, BodyWidgetState
         });
     }
 
+    cloneSelected = () => {
+        let {engine} = this.props;
+        let offset = {x: 100, y: 100};
+        let model = engine.getModel();
+
+        let itemMap = {};
+        model.getSelectedEntities().forEach((item: BaseModel<any>) => {
+            let newItem = item.clone(itemMap);
+
+            // offset the nodes slightly
+            if (newItem instanceof NodeModel) {
+                newItem.setPosition(newItem.getX() + offset.x, newItem.getY() + offset.y);
+                model.addNode(newItem);
+            } else if (newItem instanceof LinkModel) {
+                // offset the link points
+                newItem.getPoints().forEach((p) => {
+                    p.setPosition(p.getX() + offset.x, p.getY() + offset.y);
+                });
+                model.addLink(newItem);
+            }
+            (newItem as BaseModel).setSelected(false);
+        });
+
+        this.forceUpdate();
+    }
+
     render() {
         return (
             <>
+                <div className="menu">
+                    <MenuItem onClick={this.cloneSelected}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             className="feather feather-copy">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </MenuItem>
+                </div>
                 <Blueprint scale={this.state.scale} x={this.state.x} y={this.state.y} step={this.state.step}/>
                 <CanvasWidget className="diagram-container" engine={this.props.engine}/>
             </>

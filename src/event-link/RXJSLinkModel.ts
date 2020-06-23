@@ -17,14 +17,14 @@ export class RXJSLinkModel extends DefaultLinkModel {
         switch (e.function) {
           case "sourcePortChanged":
             const sourceNode = this.sourcePort.getParent() as ProducerNodeModel
-            console.log(sourceNode)
+            // console.log(sourceNode)
             const sourceSubject = sourceNode.GetSubject()
             // sourceSubject.next("hello")
             sourceSubject.subscribe(e => this.subject.next(e))
             break;
           case "targetPortChanged":
             const targetNode = this.targetPort.getParent() as ProducerNodeModel
-            console.log(targetNode)
+            // console.log(targetNode)
             const targetSubject = targetNode.GetSubject()
             // targetSubject.next("hello")
             this.subject.subscribe(e => targetSubject.next(e))

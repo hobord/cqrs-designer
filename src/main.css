@@ -35,6 +35,13 @@ html, body, #application{
     justify-content: center;
     padding: 3px;
     box-sizing: border-box;
+    color: #FFF;
+    cursor: pointer;
+}
+.is-selected .custom-node-title,
+.custom-node-title:hover {
+    background: rgba(255,255,255,0.9);
+    color: #06c !important;
 }
 .custom-node-content {
     background: repeating-linear-gradient(-45deg, #00000000, #00000000 4px, #FFFFFF33 4px, #FFFFFF33 5px);
@@ -65,4 +72,12 @@ html, body, #application{
 
 .circle-port:hover{
 	background: mediumpurple;
+}
+
+.menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
 }
