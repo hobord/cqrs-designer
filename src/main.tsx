@@ -1,15 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import './main.css';
-import createEngine, { DefaultLinkModel, DiagramModel } from '@projectstorm/react-diagrams';
+import createEngine, { DiagramModel } from '@projectstorm/react-diagrams';
 import { BodyWidget } from './BodyWidget';
 import { KafkaNodeModel } from './kafka-node/KafkaNodeModel';
 import { KafkaNodeFactory } from './kafka-node/KafkaNodeFactory';
 import { ProducerNodeFactory } from './producer-node/ProducerNodeFactory';
 import { ProducerNodeModel } from './producer-node/ProducerNodeModel';
-import { RxjsLinkFactory } from './event-link/RXJSLinkModel';
 import { ConsumerNodeFactory } from './consumer-node/ConsumerNodeFactory';
 import { ConsumerNodeModel } from './consumer-node/ConsumerNodeModel';
+import { RxjsLinkFactory } from './event-link/RXJSLinkFactory';
 
 // create an instance of the engine
 const engine = createEngine();

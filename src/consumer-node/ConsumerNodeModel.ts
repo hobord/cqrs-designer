@@ -1,5 +1,5 @@
-import { RXJSPortModel } from '../event-link/RXJSLinkModel';
 import { AbstractNodeModel } from '../abstract-node';
+import { RXJSPortModel } from '../event-link/RXJSPortModel';
 
 
 export class ConsumerNodeModel extends AbstractNodeModel {

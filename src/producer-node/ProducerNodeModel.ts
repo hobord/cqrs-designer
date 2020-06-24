@@ -1,7 +1,7 @@
 import { interval, NEVER, Subject } from 'rxjs';
-import { RXJSPortModel } from '../event-link/RXJSLinkModel';
 import { AbstractModelOptions, AbstractNodeModel } from '../abstract-node';
-import { delayWhen, filter, map, mergeMap, switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
+import { RXJSPortModel } from '../event-link/RXJSPortModel';
 
 export interface ProducerNodeModelOptions extends AbstractModelOptions {
 	interval?: number;
@@ -11,9 +11,8 @@ export class ProducerNodeModel extends AbstractNodeModel<ProducerNodeModelOption
 	color: string;
 	name: string;
 	interval: number;
-	subject: Subject<any>;
 
-	constructor(options) {
+	constructor(options?) {
 		super({
 			...options,
 			type: 'producer-node'
@@ -29,7 +28,12 @@ export class ProducerNodeModel extends AbstractNodeModel<ProducerNodeModelOption
         }
 
         pausableInterval(this.interval, this.isActive)
-            .subscribe(x => this.subject.next(`From ${this.name}: ${x}`))
+            .subscribe(x => {
+                this.getOutPorts().forEach((port: RXJSPortModel<any>, index) => {
+                    console.log(`${this.name} sending - out port ${index}: ${x}`);
+                    port.subject.next(x);
+                });
+            })
 		// setup an in and out port
 		this.addPort(
 			new RXJSPortModel({

@@ -4,10 +4,10 @@
 		"declaration": false,
 		"jsx": "react",
 		"allowJs": true,
-		"target": "es6",
+        "target": "es2019",
 		"moduleResolution": "node"
-	},
-	"include": [
+    },
+  "include": [
 		"./src"
 	]
 }
